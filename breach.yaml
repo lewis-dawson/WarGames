@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  password: cGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: derivco-breach-pod
+spec:
+  containers:
+  - name: derivco-breach-container
+    image: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "echo Password = $PASSWORD"]
+    env:
+    - name: PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mysecret
+          key: password
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "100Mi"
