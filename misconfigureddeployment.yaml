@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derivco-missconfig
+  labels:
+    app: derivco-missconfig
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derivco-missconfig
+  template:
+    metadata:
+      labels:
+        app: derivco-missconfig
+    spec:
+      containers:
+      - name: derivco-missconfig
+        image: nginx
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "100Mi"
