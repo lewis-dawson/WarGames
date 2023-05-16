@@ -18,11 +18,11 @@ spec:
       - name: derivco-missconfig
         image: nginx
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         livenessProbe:
           httpGet:
             path: /health
-            port: 8081
+            port: 81
           initialDelaySeconds: 5
           periodSeconds: 10
         resources:
@@ -39,5 +39,5 @@ spec:
    app: derivco-missconfig
  ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 80
+      targetPort: 80
